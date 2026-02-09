@@ -1,4 +1,4 @@
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link } from 'react-router'
 import { Stars } from '../components/Stars'
 import { sitters } from '../data/sitters'
 import './SitterProfile.css'
