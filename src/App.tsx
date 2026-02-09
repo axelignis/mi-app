@@ -72,6 +72,7 @@ function Stars({ rating }: { rating: number }) {
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [selectedDate, setSelectedDate] = useState('')
 
   return (
     <div className="app">
@@ -127,7 +128,17 @@ function App() {
           </p>
           <div className="search-bar">
             <input type="text" placeholder="📍 ¿Dónde necesitas una cuidadora?" />
-            <input type="date" />
+            <div className="date-input-wrapper">
+              <input
+                type="date"
+                value={selectedDate}
+                onChange={(e) => setSelectedDate(e.target.value)}
+                min={new Date().toISOString().split('T')[0]}
+              />
+              {!selectedDate && (
+                <span className="date-placeholder">📅 ¿Cuándo?</span>
+              )}
+            </div>
             <button className="btn btn-primary">Buscar</button>
           </div>
           <div className="hero-stats">
