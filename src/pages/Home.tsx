@@ -1,10 +1,21 @@
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Stars } from '../components/Stars'
+import { FacetedFilter, SortBar } from '../components/FacetedFilter'
 import { sitters } from '../data/sitters'
+import { useSitterFilters } from '../hooks/useSitterFilters'
 
 export function Home() {
-  const [selectedDate, setSelectedDate] = useState('')
+  const {
+    filters,
+    filteredSitters,
+    facetOptions,
+    facetCounts,
+    activeFilterCount,
+    toggleArrayFilter,
+    updateFilter,
+    clearAllFilters,
+    removeFilter,
+  } = useSitterFilters(sitters)
 
   return (
     <>
@@ -16,21 +27,6 @@ export function Home() {
             Conectamos a dueños de mascotas con cuidadoras de confianza.
             Encuentra la pet sister perfecta cerca de ti.
           </p>
-          <div className="search-bar">
-            <input type="text" placeholder="📍 ¿Dónde necesitas una cuidadora?" />
-            <div className="date-input-wrapper">
-              <input
-                type="date"
-                value={selectedDate}
-                onChange={(e) => setSelectedDate(e.target.value)}
-                min={new Date().toISOString().split('T')[0]}
-              />
-              {!selectedDate && (
-                <span className="date-placeholder">📅 ¿Cuándo?</span>
-              )}
-            </div>
-            <button className="btn btn-primary">Buscar</button>
-          </div>
           <div className="hero-stats">
             <div>
               <strong>500+</strong>
@@ -70,34 +66,74 @@ export function Home() {
         </div>
       </section>
 
-      {/* Featured sitters */}
+      {/* Sitters section with faceted filters */}
       <section className="sitters-section" id="sitters">
         <h2>Cuidadoras destacadas</h2>
-        <div className="sitters-grid">
-          {sitters.map((sitter) => (
-            <Link to={`/cuidadora/${sitter.id}`} className="sitter-card" key={sitter.id}>
-              <img src={sitter.image} alt={sitter.name} className="sitter-img" />
-              <div className="sitter-info">
-                <h3>{sitter.name}</h3>
-                <p className="sitter-location">📍 {sitter.location}</p>
-                <div className="sitter-rating">
-                  <Stars rating={sitter.rating} />
-                  <span className="rating-text">
-                    {sitter.rating} ({sitter.reviews} reseñas)
-                  </span>
-                </div>
-                <div className="sitter-specialties">
-                  {sitter.specialties.map((s) => (
-                    <span className="tag" key={s}>{s}</span>
-                  ))}
-                </div>
-                <div className="sitter-footer">
-                  <span className="price">{sitter.price}€<small>/hora</small></span>
-                  <span className="btn btn-primary btn-sm">Ver perfil</span>
-                </div>
+
+        <div className="sitters-layout">
+          <FacetedFilter
+            filters={filters}
+            facetOptions={facetOptions}
+            facetCounts={facetCounts}
+            activeFilterCount={activeFilterCount}
+            onToggleArray={toggleArrayFilter}
+            onUpdate={updateFilter}
+            onClearAll={clearAllFilters}
+            onRemove={removeFilter}
+          />
+
+          <div className="sitters-main">
+            <SortBar
+              sortBy={filters.sortBy}
+              total={facetCounts.total}
+              onSortChange={(v) => updateFilter('sortBy', v)}
+            />
+
+            {filteredSitters.length > 0 ? (
+              <div className="sitters-grid">
+                {filteredSitters.map((sitter) => (
+                  <Link to={`/cuidadora/${sitter.id}`} className="sitter-card" key={sitter.id}>
+                    <div className="sitter-card-img-wrapper">
+                      <img src={sitter.image} alt={sitter.name} className="sitter-img" />
+                      {sitter.verified && <span className="sitter-verified-badge">Verificada</span>}
+                    </div>
+                    <div className="sitter-info">
+                      <h3>{sitter.name}</h3>
+                      <p className="sitter-location">📍 {sitter.location}</p>
+                      <div className="sitter-rating">
+                        <Stars rating={sitter.rating} />
+                        <span className="rating-text">
+                          {sitter.rating} ({sitter.reviews} reseñas)
+                        </span>
+                      </div>
+                      <div className="sitter-meta">
+                        <span>{sitter.experience} años exp.</span>
+                        <span>⏱ {sitter.responseTime}</span>
+                      </div>
+                      <div className="sitter-specialties">
+                        {sitter.specialties.map((s) => (
+                          <span className="tag" key={s}>{s}</span>
+                        ))}
+                      </div>
+                      <div className="sitter-footer">
+                        <span className="price">{sitter.price}€<small>/hora</small></span>
+                        <span className="btn btn-primary btn-sm">Ver perfil</span>
+                      </div>
+                    </div>
+                  </Link>
+                ))}
               </div>
-            </Link>
-          ))}
+            ) : (
+              <div className="no-results">
+                <div className="no-results-icon">🔍</div>
+                <h3>No se encontraron cuidadoras</h3>
+                <p>Prueba a ajustar los filtros para ver más resultados.</p>
+                <button className="btn btn-primary" onClick={clearAllFilters}>
+                  Limpiar filtros
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </section>
     </>
