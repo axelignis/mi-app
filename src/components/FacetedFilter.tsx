@@ -19,18 +19,18 @@ interface FacetedFilterProps {
 }
 
 const SPECIALTY_ICONS: Record<string, string> = {
-  Perros: '\uD83D\uDC36',
-  Gatos: '\uD83D\uDC31',
-  Aves: '\uD83D\uDC26',
-  Reptiles: '\uD83E\uDD8E',
-  Conejos: '\uD83D\uDC30',
+  Perros: '🐶',
+  Gatos: '🐱',
+  Aves: '🐦',
+  Reptiles: '🦎',
+  Conejos: '🐰',
 }
 
 const SERVICE_ICONS: Record<string, string> = {
-  Alojamiento: '\uD83C\uDFE0',
-  Paseo: '\uD83D\uDEB6',
-  'Visita a domicilio': '\uD83D\uDCCD',
-  'Guarder\u00EDa de d\u00EDa': '\u2600\uFE0F',
+  Alojamiento: '🏠',
+  Paseo: '🚶',
+  'Visita a domicilio': '📍',
+  'Guardería de día': '☀️',
 }
 
 const RATING_OPTIONS = [
@@ -41,18 +41,18 @@ const RATING_OPTIONS = [
 ]
 
 const EXPERIENCE_OPTIONS = [
-  { value: 3, label: '3+ a\u00F1os' },
-  { value: 5, label: '5+ a\u00F1os' },
-  { value: 8, label: '8+ a\u00F1os' },
-  { value: 10, label: '10+ a\u00F1os' },
+  { value: 3, label: '3+ años' },
+  { value: 5, label: '5+ años' },
+  { value: 8, label: '8+ años' },
+  { value: 10, label: '10+ años' },
 ]
 
 const SORT_OPTIONS = [
   { value: 'rating' as const, label: 'Mejor valoradas' },
   { value: 'price-asc' as const, label: 'Precio: menor a mayor' },
   { value: 'price-desc' as const, label: 'Precio: mayor a menor' },
-  { value: 'experience' as const, label: 'M\u00E1s experiencia' },
-  { value: 'reviews' as const, label: 'M\u00E1s rese\u00F1as' },
+  { value: 'experience' as const, label: 'Más experiencia' },
+  { value: 'reviews' as const, label: 'Más reseñas' },
 ]
 
 function FacetSection({
@@ -70,7 +70,7 @@ function FacetSection({
     <div className="facet-section">
       <button className="facet-header" onClick={() => setOpen(!open)}>
         <span>{title}</span>
-        <span className={`facet-chevron ${open ? 'open' : ''}`}>{'\u25B8'}</span>
+        <span className={`facet-chevron ${open ? 'open' : ''}`}>▸</span>
       </button>
       {open && <div className="facet-body">{children}</div>}
     </div>
@@ -95,7 +95,7 @@ export function FacetedFilter({
     <>
       {/* Mobile toggle button */}
       <button className="filter-mobile-toggle" onClick={() => setMobileOpen(!mobileOpen)}>
-        <span>{'\u2699\uFE0F'} Filtros</span>
+        <span>⚙️ Filtros</span>
         {activeFilterCount > 0 && <span className="filter-badge">{activeFilterCount}</span>}
       </button>
 
@@ -109,7 +109,7 @@ export function FacetedFilter({
             </button>
           )}
           <button className="filter-mobile-close" onClick={() => setMobileOpen(false)}>
-            {'\u2715'}
+            ✕
           </button>
         </div>
 
@@ -122,7 +122,7 @@ export function FacetedFilter({
                 className="filter-chip"
                 onClick={() => onRemove(chip.filterKey, chip.value)}
               >
-                {chip.label} {'\u2715'}
+                {chip.label} ✕
               </button>
             ))}
           </div>
@@ -138,13 +138,13 @@ export function FacetedFilter({
           />
           {filters.searchQuery && (
             <button className="facet-search-clear" onClick={() => onUpdate('searchQuery', '')}>
-              {'\u2715'}
+              ✕
             </button>
           )}
         </div>
 
         {/* Location */}
-        <FacetSection title="Ubicaci\u00F3n">
+        <FacetSection title="Ubicación">
           {facetOptions.locations.map((loc) => (
             <label key={loc} className="facet-checkbox">
               <input
@@ -196,8 +196,8 @@ export function FacetedFilter({
         <FacetSection title="Precio por hora">
           <div className="facet-range">
             <div className="range-values">
-              <span>{filters.priceRange[0]}\u20AC</span>
-              <span>{filters.priceRange[1]}\u20AC</span>
+              <span>{filters.priceRange[0]}€</span>
+              <span>{filters.priceRange[1]}€</span>
             </div>
             <div className="range-inputs">
               <input
@@ -229,7 +229,7 @@ export function FacetedFilter({
         </FacetSection>
 
         {/* Rating */}
-        <FacetSection title="Valoraci\u00F3n m\u00EDnima">
+        <FacetSection title="Valoración mínima">
           <div className="facet-rating-options">
             {RATING_OPTIONS.map((opt) => (
               <button
@@ -237,7 +237,7 @@ export function FacetedFilter({
                 className={`rating-option ${filters.minRating === opt.value ? 'active' : ''}`}
                 onClick={() => onUpdate('minRating', filters.minRating === opt.value ? 0 : opt.value)}
               >
-                {'\u2605'} {opt.label}
+                ★ {opt.label}
               </button>
             ))}
           </div>
@@ -261,7 +261,7 @@ export function FacetedFilter({
         </FacetSection>
 
         {/* Verified */}
-        <FacetSection title="Verificaci\u00F3n">
+        <FacetSection title="Verificación">
           <label className="facet-checkbox">
             <input
               type="checkbox"
@@ -345,21 +345,21 @@ function buildActiveChips(
   ) {
     chips.push({
       key: 'price',
-      label: `${filters.priceRange[0]}\u20AC - ${filters.priceRange[1]}\u20AC`,
+      label: `${filters.priceRange[0]}€ - ${filters.priceRange[1]}€`,
       filterKey: 'priceRange',
     })
   }
   if (filters.minRating > 0) {
     chips.push({
       key: 'rating',
-      label: `\u2265 ${filters.minRating}\u2605`,
+      label: `≥ ${filters.minRating}★`,
       filterKey: 'minRating',
     })
   }
   if (filters.minExperience > 0) {
     chips.push({
       key: 'exp',
-      label: `${filters.minExperience}+ a\u00F1os exp.`,
+      label: `${filters.minExperience}+ años exp.`,
       filterKey: 'minExperience',
     })
   }

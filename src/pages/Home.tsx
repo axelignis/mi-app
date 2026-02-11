@@ -24,7 +24,7 @@ export function Home() {
         <div className="hero-content">
           <h1>Tu mascota merece el mejor cuidado</h1>
           <p>
-            Conectamos a due\u00F1os de mascotas con cuidadoras de confianza.
+            Conectamos a dueños de mascotas con cuidadoras de confianza.
             Encuentra la pet sister perfecta cerca de ti.
           </p>
           <div className="hero-stats">
@@ -37,8 +37,8 @@ export function Home() {
               <span>Mascotas cuidadas</span>
             </div>
             <div>
-              <strong>4.8 {'\u2605'}</strong>
-              <span>Valoraci\u00F3n media</span>
+              <strong>4.8 ★</strong>
+              <span>Valoración media</span>
             </div>
           </div>
         </div>
@@ -46,20 +46,20 @@ export function Home() {
 
       {/* How it works */}
       <section className="how-it-works" id="how-it-works">
-        <h2>{'\u00BF'}C\u00F3mo funciona?</h2>
+        <h2>¿Cómo funciona?</h2>
         <div className="steps">
           <div className="step">
-            <div className="step-icon">{'\uD83D\uDD0D'}</div>
+            <div className="step-icon">🔍</div>
             <h3>Busca</h3>
-            <p>Encuentra cuidadoras cerca de ti filtrando por ubicaci\u00F3n, disponibilidad y tipo de mascota.</p>
+            <p>Encuentra cuidadoras cerca de ti filtrando por ubicación, disponibilidad y tipo de mascota.</p>
           </div>
           <div className="step">
-            <div className="step-icon">{'\uD83D\uDCAC'}</div>
+            <div className="step-icon">💬</div>
             <h3>Contacta</h3>
             <p>Chatea con las cuidadoras, conoce su experiencia y resuelve todas tus dudas.</p>
           </div>
           <div className="step">
-            <div className="step-icon">{'\uD83D\uDC36'}</div>
+            <div className="step-icon">🐶</div>
             <h3>Reserva</h3>
             <p>Reserva el servicio de forma segura y deja a tu mascota en las mejores manos.</p>
           </div>
@@ -99,16 +99,16 @@ export function Home() {
                     </div>
                     <div className="sitter-info">
                       <h3>{sitter.name}</h3>
-                      <p className="sitter-location">{'\uD83D\uDCCD'} {sitter.location}</p>
+                      <p className="sitter-location">📍 {sitter.location}</p>
                       <div className="sitter-rating">
                         <Stars rating={sitter.rating} />
                         <span className="rating-text">
-                          {sitter.rating} ({sitter.reviews} rese\u00F1as)
+                          {sitter.rating} ({sitter.reviews} reseñas)
                         </span>
                       </div>
                       <div className="sitter-meta">
-                        <span>{sitter.experience} a\u00F1os exp.</span>
-                        <span>{'\u23F1'} {sitter.responseTime}</span>
+                        <span>{sitter.experience} años exp.</span>
+                        <span>⏱ {sitter.responseTime}</span>
                       </div>
                       <div className="sitter-specialties">
                         {sitter.specialties.map((s) => (
@@ -116,7 +116,7 @@ export function Home() {
                         ))}
                       </div>
                       <div className="sitter-footer">
-                        <span className="price">{sitter.price}{'\u20AC'}<small>/hora</small></span>
+                        <span className="price">{sitter.price}€<small>/hora</small></span>
                         <span className="btn btn-primary btn-sm">Ver perfil</span>
                       </div>
                     </div>
@@ -125,9 +125,9 @@ export function Home() {
               </div>
             ) : (
               <div className="no-results">
-                <div className="no-results-icon">{'\uD83D\uDD0D'}</div>
+                <div className="no-results-icon">🔍</div>
                 <h3>No se encontraron cuidadoras</h3>
-                <p>Prueba a ajustar los filtros para ver m\u00E1s resultados.</p>
+                <p>Prueba a ajustar los filtros para ver más resultados.</p>
                 <button className="btn btn-primary" onClick={clearAllFilters}>
                   Limpiar filtros
                 </button>
